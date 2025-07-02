@@ -1,0 +1,21 @@
+{
+  "name": "publish-study-note",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "docs:dev": "vitepress dev",
+    "docs:build": "vitepress build",
+    "docs:preview": "vitepress preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@mdit/plugin-katex": "^0.23.1",
+    "@types/node": "^24.0.10",
+    "katex": "^0.16.22",
+    "markdown-it": "^14.1.0",
+    "markdown-it-mathjax3": "^4.3.2"
+  }
+}
