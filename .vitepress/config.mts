@@ -2,6 +2,7 @@ import { defineConfig } from 'vitepress'
 import { nav, sidebar } from './nav'
 import mathjax3 from 'markdown-it-mathjax3'
 import { generateRSSFeed } from './generateRss'
+import { MermaidMarkdown, MermaidPlugin } from 'vitepress-plugin-mermaid';
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -36,7 +37,17 @@ export default defineConfig({
   },
   markdown: {
     config: (md) => {
-      md.use(mathjax3)
+      md.use(mathjax3);
+      md.use(MermaidMarkdown); 
+    },
+  },
+  vite: {
+    plugins: [MermaidPlugin()],
+    optimizeDeps: {
+      include: ['mermaid'],
+    },
+    ssr: {
+      noExternal: ['mermaid'],
     },
   },
   vue: {
