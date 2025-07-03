@@ -5,7 +5,6 @@ import DefaultTheme from 'vitepress/theme'
 import './style.css'
 import MetaInfo from './components/MetaInfo.vue'
 import { inject } from '@vercel/analytics'
-import { Fancybox } from '@fancyapps/ui';
 import '@fancyapps/ui/dist/fancybox/fancybox.css';
 import { onMounted, watch, nextTick } from 'vue';
 import { useRoute } from 'vitepress';
@@ -15,32 +14,39 @@ export default {
 
   setup() {
     const route = useRoute();
-    const initZoom = () => {
-      // 清理之前的实例
-      Fancybox.destroy();
-      
-      // 为图片添加 data-caption 属性
-      const images = document.querySelectorAll('.main img');
-      images.forEach(img => {
-        const alt = img.getAttribute('alt');
-        if (alt) {
-          img.setAttribute('data-caption', alt);
-        }
-      });
-      
-      // 为所有主内容区域的图片启用 Fancybox
-      Fancybox.bind('.main img', {
-        Toolbar: {
-          display: {
-            left: ['infobar'],
-            middle: [],
-            right: ['slideshow', 'fullscreen', 'thumbs', 'close']
+    const initZoom = async () => {
+      try {
+        // 动态导入 Fancybox
+        const { Fancybox } = await import('@fancyapps/ui');
+        
+        // 清理之前的实例
+        Fancybox.destroy();
+        
+        // 为图片添加 data-caption 属性
+        const images = document.querySelectorAll('.main img');
+        images.forEach(img => {
+          const alt = img.getAttribute('alt');
+          if (alt) {
+            img.setAttribute('data-caption', alt);
           }
-        },
-        Images: {
-          zoom: true
-        }
-      });
+        });
+        
+        // 为所有主内容区域的图片启用 Fancybox
+        Fancybox.bind('.main img', {
+          Toolbar: {
+            display: {
+              left: ['infobar'],
+              middle: [],
+              right: ['slideshow', 'fullscreen', 'thumbs', 'close']
+            }
+          },
+          Images: {
+            zoom: true
+          }
+        });
+      } catch (error) {
+        console.error('Failed to load Fancybox:', error);
+      }
     };
     onMounted(() => {
       initZoom();
