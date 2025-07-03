@@ -15,54 +15,88 @@ interface NoteFrontmatter {
   draft?: boolean
 }
 
-// 清理和转换内容为适合RSS的格式
-function cleanContent(content: string): { excerpt: string; cleanContent: string } {
+// 改进的内容处理函数，支持readability
+function processContentForReadability(content: string, frontmatter: NoteFrontmatter): { 
+  excerpt: string; 
+  fullContent: string; 
+  textContent: string 
+} {
   // 移除frontmatter分隔符
   let cleaned = content.replace(/^---[\s\S]*?---/, '').trim()
   
-  // 处理数学公式 - 将LaTeX转换为文本说明
-  cleaned = cleaned.replace(/\$\$[\s\S]*?\$\$/g, '[数学公式]')
-  cleaned = cleaned.replace(/\$[^$]*?\$/g, '[公式]')
+  // 保存原始内容用于完整显示
+  let fullHtmlContent = cleaned
   
-  // 移除markdown语法但保留内容结构
-  cleaned = cleaned
-    .replace(/#+\s/g, '') // 移除标题标记
-    .replace(/\*\*([^*]+)\*\*/g, '$1') // 移除加粗标记
-    .replace(/\*([^*]+)\*/g, '$1') // 移除斜体标记
-    .replace(/`([^`]+)`/g, '$1') // 移除代码标记
-    .replace(/```[\s\S]*?```/g, '[代码块]') // 替换代码块
-    .replace(/!\[.*?\]\([^)]+\)/g, '[图片]') // 替换图片
-    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // 移除链接标记保留文本
-    .replace(/>\s/g, '') // 移除引用标记
-    .replace(/\|.*?\|/g, '') // 移除表格
-    .replace(/[-*+]\s/g, '') // 移除列表标记
-    .replace(/\d+\.\s/g, '') // 移除有序列表标记
+  // 将Markdown转换为更好的HTML格式
+  fullHtmlContent = fullHtmlContent
+    // 处理标题
+    .replace(/^### (.*$)/gm, '<h3>$1</h3>')
+    .replace(/^## (.*$)/gm, '<h2>$1</h2>')
+    .replace(/^# (.*$)/gm, '<h1>$1</h1>')
+    // 处理加粗和斜体
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+    // 处理行内代码
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    // 处理代码块
+    .replace(/```(\w+)?\n([\s\S]*?)```/g, '<pre><code>$2</code></pre>')
+    // 处理引用
+    .replace(/^> (.*)$/gm, '<blockquote>$1</blockquote>')
+    // 处理链接
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
+    // 处理图片
+    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" />')
+    // 处理列表
+    .replace(/^[-*+] (.*)$/gm, '<li>$1</li>')
+    .replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>')
+    // 处理数学公式 - 保留但添加说明
+    .replace(/\$\$([\s\S]*?)\$\$/g, '<div class="math-formula" title="数学公式">$$1$$</div>')
+    .replace(/\$([^$]*?)\$/g, '<span class="math-inline" title="数学公式">$$$1$$</span>')
   
-  // 清理多余的空白字符
-  cleaned = cleaned
-    .replace(/\n{3,}/g, '\n\n') // 最多保留两个换行
-    .replace(/\s{2,}/g, ' ') // 多个空格合并为一个
+  // 转换段落
+  const paragraphs = fullHtmlContent.split('\n\n').filter(p => p.trim())
+  fullHtmlContent = paragraphs.map(p => {
+    p = p.trim()
+    // 如果已经是HTML标签，保持不变
+    if (p.startsWith('<') && p.endsWith('>')) {
+      return p
+    }
+    // 否则包装成段落
+    return `<p>${p}</p>`
+  }).join('\n')
+  
+  // 生成纯文本内容用于摘要
+  let textContent = cleaned
+    .replace(/```[\s\S]*?```/g, '[代码块]')
+    .replace(/\$\$[\s\S]*?\$\$/g, '[数学公式]')
+    .replace(/\$[^$]*?\$/g, '[公式]')
+    .replace(/#+\s/g, '')
+    .replace(/\*\*([^*]+)\*\*/g, '$1')
+    .replace(/\*([^*]+)\*/g, '$1')
+    .replace(/`([^`]+)`/g, '$1')
+    .replace(/!\[.*?\]\([^)]+\)/g, '[图片]')
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .replace(/>\s/g, '')
+    .replace(/\|.*?\|/g, '')
+    .replace(/[-*+]\s/g, '')
+    .replace(/\d+\.\s/g, '')
+    .replace(/\n{3,}/g, '\n\n')
+    .replace(/\s{2,}/g, ' ')
     .trim()
   
-  // 生成摘要（前200个字符）
-  const excerpt = cleaned.substring(0, 200).trim()
-  const finalExcerpt = excerpt.length < cleaned.length ? excerpt + '...' : excerpt
-  
-  // 返回适合RSS的HTML内容（简单的段落分割）
-  const htmlContent = cleaned
-    .split('\n\n')
-    .filter(para => para.trim())
-    .map(para => `<p>${para.trim()}</p>`)
-    .join('\n')
+  // 生成摘要
+  const excerpt = textContent.substring(0, 200).trim()
+  const finalExcerpt = excerpt.length < textContent.length ? excerpt + '...' : excerpt
   
   return {
     excerpt: finalExcerpt,
-    cleanContent: htmlContent || '<p>内容正在处理中...</p>'
+    fullContent: fullHtmlContent,
+    textContent: textContent
   }
 }
 
 export async function generateRSSFeed(config: any) {
-  const baseUrl = 'https://publish-study-note.vercel.app' // 根据你的Vercel项目名自动生成
+  const baseUrl = 'https://publish-study-note.vercel.app'
   const siteTitle = "aBER's Study Note"
   const siteDescription = "Publish study notes and record some processes."
   
@@ -87,11 +121,11 @@ export async function generateRSSFeed(config: any) {
     }
   })
 
-  // 查找所有markdown文件，排除根目录的指南文档
+  // 查找所有markdown文件
   const files = await fg(['Note/**/*.md', 'Record/**/*.md'], {
     cwd: resolve(__dirname, '../'),
     absolute: true,
-    ignore: ['RSS-GUIDE.md', 'README.md', 'index.md']
+    ignore: ['README.md', 'index.md']
   })
 
   const posts: Array<{
@@ -124,23 +158,28 @@ export async function generateRSSFeed(config: any) {
 
       const url = `${baseUrl}${relativePath}`
       
-      // 清理和处理内容
-      const { excerpt, cleanContent } = cleanContent(content)
+      // 处理内容以支持readability
+      const { excerpt, fullContent, textContent } = processContentForReadability(content, frontmatter)
       
       // 使用frontmatter的描述或生成的摘要
       const finalExcerpt = frontmatter.description || excerpt
+      
+      // 清理标题（移除文件名中的编号前缀）
+      const cleanTitle = frontmatter.title || 
+        relativePath.split('/').pop()?.replace(/^\d+x\d+-/, '') || 
+        'Untitled'
 
       posts.push({
-        title: frontmatter.title || relativePath.split('/').pop()?.replace(/^\d+x\d+-/, '') || 'Untitled',
+        title: cleanTitle,
         url,
         date: frontmatter.published ? new Date(frontmatter.published) : new Date(),
         excerpt: finalExcerpt,
-        content: cleanContent,
+        content: fullContent,
         category: frontmatter.category,
         tags: frontmatter.tags
       })
     } catch (error) {
-      console.warn(`Error processing ${file}:`, error)
+      console.warn(`⚠️  Error processing ${file}:`, error)
     }
   }
 
@@ -176,9 +215,18 @@ export async function generateRSSFeed(config: any) {
     writeFileSync(resolve(outDir, 'feed.json'), feed.json1())
     
     console.log(`✅ RSS feeds generated successfully with ${posts.length} posts`)
-    posts.forEach(post => {
+    console.log('📖 Readability features enabled:')
+    console.log('   • Full content preservation')
+    console.log('   • HTML formatting for better display')
+    console.log('   • Math formula handling')
+    console.log('   • Smart excerpt generation')
+    
+    posts.slice(0, 5).forEach(post => {
       console.log(`  📄 ${post.title} (${post.date.toISOString().split('T')[0]})`)
     })
+    if (posts.length > 5) {
+      console.log(`  ... and ${posts.length - 5} more posts`)
+    }
   } catch (error) {
     console.error('❌ Error writing RSS files:', error)
   }
