@@ -1,5 +1,5 @@
 ---
-title: 0x00_计算机网络体系结构
+title: 0x0_计算机网络体系结构
 published: 2025-06-14
 lang: zh
 subject: 计算机网络

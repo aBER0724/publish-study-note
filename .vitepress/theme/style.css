@@ -224,10 +224,34 @@ mjx-container[jax="CHTML"][display="block"]::-webkit-scrollbar,
   height: 0 !important;
 }
 
-.medium-zoom-overlay {
-  z-index: 30;
+/* Fancybox 样式调整 */
+.fancybox__container {
+  z-index: 9999 !important;
 }
 
-.medium-zoom-image {
-  z-index: 9999 !important;/* 给的值是21，但是实测盖不住，直接999 */
+.fancybox__backdrop {
+  background: var(--vp-c-bg) !important;
+}
+
+/* Fancybox 6.x 工具栏和其他组件 */
+.f-button,
+[class*="f-button"] {
+  font-size: 14px !important;
+}
+
+/* 强制覆盖所有 Fancybox 6.x 文字颜色 */
+[class*="f-caption"],
+[id*="f-caption"],
+[class*="f-infobar"],
+[id*="f-infobar"] {
+  color: #2a2a2a !important;
+  font-weight: 600 !important;
+}
+
+.dark [class*="f-caption"],
+.dark [id*="f-caption"],
+.dark [class*="f-infobar"],
+.dark [id*="f-infobar"] {
+  color: #e6e6e6 !important;
+  font-weight: 600 !important;
 }
