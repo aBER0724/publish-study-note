@@ -1,6 +1,6 @@
 ---
 title: 0x0_线性系统
-published: 2025-05-09T00:00:00.000Z
+published: 2025-05-09
 lang: zh
 subject: 线性代数
 tags:
@@ -15,9 +15,6 @@ keywords:
   - 线性方程组
   - 线性系统
   - 标准向量
-difficulty: basic
-series: 线性代数基础
-order: 1
 ---
 
 ## 向量 Vector

@@ -1,6 +1,6 @@
 ---
 title: 0x2_Subspace
-published: 2025-07-02T00:00:00.000Z
+published: 2025-07-02
 lang: zh
 subject: 线性代数
 tags:
@@ -11,9 +11,6 @@ keywords:
   - 向量
   - 矩阵
   - 线性变换
-difficulty: basic
-series: 线性代数基础
-order: 3
 ---
 
 ## Subspace

@@ -1,6 +1,6 @@
 ---
 title: 0x0_基础知识
-published: 2025-05-08T00:00:00.000Z
+published: 2025-05-08
 lang: zh
 subject: 形式语言与自动机
 tags:
@@ -12,9 +12,6 @@ keywords:
   - 自动机
   - 编译原理
   - 基础知识
-difficulty: basic
-series: 形式语言与自动机理论
-order: 1
 ---
 
 ### 字母表

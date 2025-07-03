@@ -1,20 +1,23 @@
 <template>
   <div class="meta-info" v-if="hasMeta">
-    <div class="meta-section">
-      <div class="meta-item" v-if="frontmatter.published">
-        <span class="meta-value">{{ formatDate(frontmatter.published) }} 发布</span>
+    <!-- 发布日期和标签同行 -->
+    <div class="meta-header" v-if="frontmatter.published || (frontmatter.tags && frontmatter.tags.length > 0)">
+      <div class="meta-left">
+        <div class="meta-item" v-if="frontmatter.published">
+          <span class="meta-value">{{ formatDate(frontmatter.published) }} 发布</span>
+        </div>
       </div>
-    </div>
-    
-    <div class="meta-tags" v-if="frontmatter.tags && frontmatter.tags.length > 0">
-      <div class="tags-container">
-        <span 
-          v-for="tag in frontmatter.tags" 
-          :key="tag" 
-          class="tag"
-        >
-          {{ tag }}
-        </span>
+      
+      <div class="meta-right" v-if="frontmatter.tags && frontmatter.tags.length > 0">
+        <div class="tags-container">
+          <span 
+            v-for="tag in frontmatter.tags" 
+            :key="tag" 
+            class="tag"
+          >
+            {{ tag }}
+          </span>
+        </div>
       </div>
     </div>
 
@@ -81,11 +84,23 @@ const getLanguageDisplay = (lang: string) => {
   font-size: 14px;
 }
 
-.meta-section {
+.meta-header {
   display: flex;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
   gap: 16px;
   margin-bottom: 12px;
+}
+
+.meta-left {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.meta-right {
+  display: flex;
+  align-items: center;
 }
 
 .meta-item {
@@ -129,22 +144,12 @@ const getLanguageDisplay = (lang: string) => {
   line-height: 1.5;
 }
 
-.meta-tags {
-  border-top: 1px solid var(--vp-c-divider);
-  padding-top: 16px;
-  margin-top: 8px;
-}
-
-.meta-tags .meta-label {
-  display: block;
-  margin-bottom: 8px;
-}
-
 .tags-container {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-top: 4px;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .tag {
@@ -167,9 +172,18 @@ const getLanguageDisplay = (lang: string) => {
 
 /* 响应式设计 */
 @media (max-width: 640px) {
-  .meta-section {
+  .meta-header {
     flex-direction: column;
-    gap: 8px;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  
+  .meta-right {
+    width: 100%;
+  }
+  
+  .tags-container {
+    justify-content: flex-start;
   }
   
   .meta-item {

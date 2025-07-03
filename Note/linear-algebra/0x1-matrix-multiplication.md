@@ -1,6 +1,6 @@
 ---
 title: 0x1_矩阵乘法
-published: 2025-06-13T00:00:00.000Z
+published: 2025-06-13
 lang: zh
 subject: 线性代数
 tags:
@@ -12,9 +12,6 @@ keywords:
   - 矩阵
   - 线性变换
   - 矩阵乘法
-difficulty: basic
-series: 线性代数基础
-order: 2
 ---
 
 ## 矩阵乘法 Matrix Multiplication

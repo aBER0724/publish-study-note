@@ -1,6 +1,6 @@
 ---
 title: 0x1_有穷状态自动机
-published: 2025-05-08T00:00:00.000Z
+published: 2025-05-08
 lang: zh
 subject: 形式语言与自动机
 tags:
@@ -12,9 +12,6 @@ keywords:
   - 自动机
   - 编译原理
   - 有穷状态自动机
-difficulty: basic
-series: 形式语言与自动机理论
-order: 2
 ---
 
 ## 有穷自动机 FA
