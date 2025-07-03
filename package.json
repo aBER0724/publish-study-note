@@ -14,10 +14,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "vitepress": "^1.6.3",
-    "feed": "^4.2.2",
+    "@vercel/analytics": "^1.5.0",
     "fast-glob": "^3.3.2",
-    "gray-matter": "^4.0.3"
+    "feed": "^4.2.2",
+    "gray-matter": "^4.0.3",
+    "vitepress": "^1.6.3"
   },
   "devDependencies": {
     "@mdit/plugin-katex": "^0.23.1",

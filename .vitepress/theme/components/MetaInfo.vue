@@ -32,6 +32,11 @@ import type { NoteFrontmatter } from '../types'
 const { frontmatter, page } = useData<NoteFrontmatter>()
 
 const hasMeta = computed(() => {
+  // 如果明确设置了隐藏meta，则不显示
+  if (frontmatter.value.hideMeta) {
+    return false
+  }
+  
   return frontmatter.value.published || 
          frontmatter.value.lang || 
          frontmatter.value.author ||

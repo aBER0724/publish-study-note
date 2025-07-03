@@ -10,6 +10,10 @@ export default defineConfig({
   lastUpdated: true,
   cleanUrls: true,
   head: [
+    // Favicon配置 - 使用URL
+    ['link', { rel: 'icon', type: 'image/jpeg', href: 'https://imgbed.aberrrrrrr.space/file/1749883355977_5B703F00-1A9F-4C08-8D33-81040E00AAC7_1_105_c.jpeg' }],
+    ['link', { rel: 'apple-touch-icon', href: 'https://imgbed.aberrrrrrr.space/file/1749883355977_5B703F00-1A9F-4C08-8D33-81040E00AAC7_1_105_c.jpeg' }],
+    
     // RSS feed links with enhanced readability support
     ['link', { rel: 'alternate', type: 'application/rss+xml', title: 'RSS Feed', href: '/feed.xml' }],
     ['link', { rel: 'alternate', type: 'application/atom+xml', title: 'Atom Feed', href: '/atom.xml' }],
@@ -20,6 +24,7 @@ export default defineConfig({
     ['meta', { name: 'keywords', content: '学习笔记,线性代数,信息论,计算机网络,形式语言与自动机' }],
     ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { property: 'og:site_name', content: "aBER's Study Note" }],
+    ['meta', { property: 'og:url', content: 'https://publish-study-note.vercel.app' }],
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
     
     // RSS readability enhancements
@@ -52,7 +57,7 @@ export default defineConfig({
       { icon: 'github', link: 'https://github.com/aBER0724/publish-study-note' },
       { 
         icon: { 
-          svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3.429 2.571c-.794 0-1.439.645-1.439 1.439v15.98c0 .794.645 1.439 1.439 1.439h17.143c.794 0 1.439-.645 1.439-1.439V4.01c0-.794-.645-1.439-1.439-1.439H3.429zm8.571 3.858c1.588 0 2.878 1.29 2.878 2.878s-1.29 2.878-2.878 2.878S9.122 10.895 9.122 9.307s1.29-2.878 2.878-2.878zM6.643 16.929v-1.439c0-1.588 1.29-2.878 2.878-2.878h5.758c1.588 0 2.878 1.29 2.878 2.878v1.439H6.643z"/></svg>' 
+          svg: '<svg fill="#FFA500" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>RSS</title><path d="M19.199 24C19.199 13.467 10.533 4.8 0 4.8V0c13.165 0 24 10.835 24 24h-4.801zM3.291 17.415c1.814 0 3.293 1.479 3.293 3.295 0 1.813-1.485 3.29-3.301 3.29C1.47 24 0 22.526 0 20.71s1.475-3.294 3.291-3.295zM15.909 24h-4.665c0-6.169-5.075-11.245-11.244-11.245V8.09c8.727 0 15.909 7.184 15.909 15.91z"/></svg>' 
         }, 
         link: '/feed.xml', 
         ariaLabel: 'RSS订阅 - 支持完整内容阅读' 
