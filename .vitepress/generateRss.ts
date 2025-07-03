@@ -15,8 +15,54 @@ interface NoteFrontmatter {
   draft?: boolean
 }
 
+// 清理和转换内容为适合RSS的格式
+function cleanContent(content: string): { excerpt: string; cleanContent: string } {
+  // 移除frontmatter分隔符
+  let cleaned = content.replace(/^---[\s\S]*?---/, '').trim()
+  
+  // 处理数学公式 - 将LaTeX转换为文本说明
+  cleaned = cleaned.replace(/\$\$[\s\S]*?\$\$/g, '[数学公式]')
+  cleaned = cleaned.replace(/\$[^$]*?\$/g, '[公式]')
+  
+  // 移除markdown语法但保留内容结构
+  cleaned = cleaned
+    .replace(/#+\s/g, '') // 移除标题标记
+    .replace(/\*\*([^*]+)\*\*/g, '$1') // 移除加粗标记
+    .replace(/\*([^*]+)\*/g, '$1') // 移除斜体标记
+    .replace(/`([^`]+)`/g, '$1') // 移除代码标记
+    .replace(/```[\s\S]*?```/g, '[代码块]') // 替换代码块
+    .replace(/!\[.*?\]\([^)]+\)/g, '[图片]') // 替换图片
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // 移除链接标记保留文本
+    .replace(/>\s/g, '') // 移除引用标记
+    .replace(/\|.*?\|/g, '') // 移除表格
+    .replace(/[-*+]\s/g, '') // 移除列表标记
+    .replace(/\d+\.\s/g, '') // 移除有序列表标记
+  
+  // 清理多余的空白字符
+  cleaned = cleaned
+    .replace(/\n{3,}/g, '\n\n') // 最多保留两个换行
+    .replace(/\s{2,}/g, ' ') // 多个空格合并为一个
+    .trim()
+  
+  // 生成摘要（前200个字符）
+  const excerpt = cleaned.substring(0, 200).trim()
+  const finalExcerpt = excerpt.length < cleaned.length ? excerpt + '...' : excerpt
+  
+  // 返回适合RSS的HTML内容（简单的段落分割）
+  const htmlContent = cleaned
+    .split('\n\n')
+    .filter(para => para.trim())
+    .map(para => `<p>${para.trim()}</p>`)
+    .join('\n')
+  
+  return {
+    excerpt: finalExcerpt,
+    cleanContent: htmlContent || '<p>内容正在处理中...</p>'
+  }
+}
+
 export async function generateRSSFeed(config: any) {
-  const baseUrl = 'https://blog.aberrrrrrr.space' // 根据你的Vercel项目名自动生成
+  const baseUrl = 'https://publish-study-note.vercel.app' // 根据你的Vercel项目名自动生成
   const siteTitle = "aBER's Study Note"
   const siteDescription = "Publish study notes and record some processes."
   
@@ -78,16 +124,18 @@ export async function generateRSSFeed(config: any) {
 
       const url = `${baseUrl}${relativePath}`
       
-      // 提取摘要（前150个字符或description）
-      const excerpt = frontmatter.description || 
-        content.replace(/[#*`]/g, '').substring(0, 150) + '...'
+      // 清理和处理内容
+      const { excerpt, cleanContent } = cleanContent(content)
+      
+      // 使用frontmatter的描述或生成的摘要
+      const finalExcerpt = frontmatter.description || excerpt
 
       posts.push({
-        title: frontmatter.title || relativePath.split('/').pop() || 'Untitled',
+        title: frontmatter.title || relativePath.split('/').pop()?.replace(/^\d+x\d+-/, '') || 'Untitled',
         url,
         date: frontmatter.published ? new Date(frontmatter.published) : new Date(),
-        excerpt,
-        content,
+        excerpt: finalExcerpt,
+        content: cleanContent,
         category: frontmatter.category,
         tags: frontmatter.tags
       })
@@ -128,7 +176,10 @@ export async function generateRSSFeed(config: any) {
     writeFileSync(resolve(outDir, 'feed.json'), feed.json1())
     
     console.log(`✅ RSS feeds generated successfully with ${posts.length} posts`)
+    posts.forEach(post => {
+      console.log(`  📄 ${post.title} (${post.date.toISOString().split('T')[0]})`)
+    })
   } catch (error) {
-    console.error('Error writing RSS files:', error)
+    console.error('❌ Error writing RSS files:', error)
   }
 } 
