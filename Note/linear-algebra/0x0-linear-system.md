@@ -1,10 +1,23 @@
 ---
-title: "线性代数 | 0x0_线性系统"
-published: 2025-05-09
+title: 0x0_线性系统
+published: 2025-05-09T00:00:00.000Z
 lang: zh
+subject: 线性代数
 tags:
-   - 笔记
-   - 线性代数
+  - 线性代数
+  - 基础
+  - 向量
+  - 矩阵
+description: 线性系统的基本概念, 包括向量的定义与运算、矩阵表示和线性方程组的求解方法
+keywords:
+  - 向量
+  - 矩阵
+  - 线性方程组
+  - 线性系统
+  - 标准向量
+difficulty: basic
+series: 线性代数基础
+order: 1
 ---
 
 ## 向量 Vector
@@ -58,7 +71,7 @@ $$
    \vdots \\
    0
 \end{bmatrix},
-\bold{e}_2 =
+\boldsymbol{e}_2 =
 \begin{bmatrix}
    0 \\
    1 \\
@@ -618,7 +631,7 @@ $$
    > 全 0 行在矩阵的最下方.
 
 2. 引导项(Leading Entries)呈阶梯形.  
-   > 引导项(Leading Entry): 每一行中，从左边数第一个非零的元素.
+   > 引导项(Leading Entry): 每一行中, 从左边数第一个非零的元素.
 
 #### 简化阶梯型矩阵 RREF
 

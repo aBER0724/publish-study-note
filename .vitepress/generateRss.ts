@@ -15,7 +15,7 @@ interface NoteFrontmatter {
   draft?: boolean
 }
 
-// 改进的内容处理函数，支持readability
+// 改进的内容处理函数, 支持readability
 function processContentForReadability(content: string, frontmatter: NoteFrontmatter): { 
   excerpt: string; 
   fullContent: string; 
@@ -57,7 +57,7 @@ function processContentForReadability(content: string, frontmatter: NoteFrontmat
   const paragraphs = fullHtmlContent.split('\n\n').filter(p => p.trim())
   fullHtmlContent = paragraphs.map(p => {
     p = p.trim()
-    // 如果已经是HTML标签，保持不变
+    // 如果已经是HTML标签, 保持不变
     if (p.startsWith('<') && p.endsWith('>')) {
       return p
     }
@@ -183,7 +183,7 @@ export async function generateRSSFeed(config: any) {
     }
   }
 
-  // 按日期排序，最新的在前
+  // 按日期排序, 最新的在前
   posts.sort((a, b) => b.date.getTime() - a.date.getTime())
 
   // 添加到RSS feed

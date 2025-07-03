@@ -2,33 +2,11 @@
   <div class="meta-info" v-if="hasMeta">
     <div class="meta-section">
       <div class="meta-item" v-if="frontmatter.published">
-        <span class="meta-label">📅 发布日期</span>
-        <span class="meta-value">{{ formatDate(frontmatter.published) }}</span>
+        <span class="meta-value">{{ formatDate(frontmatter.published) }} 发布</span>
       </div>
-      
-      <div class="meta-item" v-if="frontmatter.category">
-        <span class="meta-label">📂 分类</span>
-        <span class="meta-value">{{ frontmatter.category }}</span>
-      </div>
-      
-      <div class="meta-item" v-if="lastUpdated">
-        <span class="meta-label">⏰ 最后更新</span>
-        <span class="meta-value">{{ formatDate(lastUpdated) }}</span>
-      </div>
-      
-      <div class="meta-item" v-if="frontmatter.draft">
-        <span class="meta-label">📝 状态</span>
-        <span class="meta-value draft">草稿</span>
-      </div>
-    </div>
-    
-    <div class="meta-description" v-if="frontmatter.description">
-      <span class="meta-label">📋 描述</span>
-      <p class="description-text">{{ frontmatter.description }}</p>
     </div>
     
     <div class="meta-tags" v-if="frontmatter.tags && frontmatter.tags.length > 0">
-      <span class="meta-label">🏷️ 标签</span>
       <div class="tags-container">
         <span 
           v-for="tag in frontmatter.tags" 
@@ -38,6 +16,10 @@
           {{ tag }}
         </span>
       </div>
+    </div>
+
+    <div class="meta-description" v-if="frontmatter.description">
+      <p class="description-text">{{ frontmatter.description }}</p>
     </div>
   </div>
 </template>
@@ -126,8 +108,8 @@ const getLanguageDisplay = (lang: string) => {
 
 .meta-description {
   border-top: 1px solid var(--vp-c-divider);
-  padding-top: 12px;
-  margin-bottom: 12px;
+  padding-top: 16px;
+  margin: 16px 0 8px 0;
 }
 
 .meta-description .meta-label {
@@ -144,7 +126,8 @@ const getLanguageDisplay = (lang: string) => {
 
 .meta-tags {
   border-top: 1px solid var(--vp-c-divider);
-  padding-top: 12px;
+  padding-top: 16px;
+  margin-top: 8px;
 }
 
 .meta-tags .meta-label {
@@ -155,18 +138,21 @@ const getLanguageDisplay = (lang: string) => {
 .tags-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 8px;
+  margin-top: 4px;
 }
 
 .tag {
   background: var(--vp-c-brand-soft);
   color: var(--vp-c-brand-1);
-  padding: 2px 8px;
+  padding: 4px 10px;
   border-radius: 12px;
   font-size: 12px;
   font-weight: 500;
   border: 1px solid var(--vp-c-brand-1);
   transition: all 0.2s ease;
+  display: inline-block;
+  line-height: 1.2;
 }
 
 .tag:hover {

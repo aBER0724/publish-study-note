@@ -1,10 +1,19 @@
 ---
-title: "计算机网络| 0x0_计算机网络体系结构"
-published: 2025-06-14
+title: 0x0_计算机网络体系结构
+published: 2025-06-14T00:00:00.000Z
 lang: zh
+subject: 计算机网络
 tags:
-   - 笔记
-   - 计算机网络
+  - 计算机网络
+description: 计算机网络原理与协议
+keywords:
+  - 计算机网络
+  - 网络协议
+  - 网络架构
+  - 计算机网络体系结构
+difficulty: basic
+series: 计算机网络基础
+order: 1
 ---
 
 ## 1.1 计算机网络概述

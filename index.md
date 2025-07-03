@@ -9,7 +9,6 @@ hero:
 features:
   - title: Note
     details: Study notes on various subjects.
-    # link: /Note/
   - title: Record
     details: Records of processes and thoughts.
 ---
