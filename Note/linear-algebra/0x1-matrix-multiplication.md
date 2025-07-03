@@ -1,5 +1,5 @@
 ---
-title: 0x1_矩阵乘法
+title: 0x01_矩阵乘法
 published: 2025-06-13
 lang: zh
 subject: 线性代数

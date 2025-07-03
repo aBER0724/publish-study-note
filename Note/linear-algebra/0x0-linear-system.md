@@ -1,5 +1,5 @@
 ---
-title: 0x0_线性系统
+title: 0x00_线性系统
 published: 2025-05-09
 lang: zh
 subject: 线性代数

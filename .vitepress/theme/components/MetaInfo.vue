@@ -3,20 +3,20 @@
     <!-- 发布日期和标签同行 -->
     <div class="meta-header" v-if="frontmatter.published || (frontmatter.tags && frontmatter.tags.length > 0)">
       <div class="meta-left">
-        <div class="meta-item" v-if="frontmatter.published">
-          <span class="meta-value">{{ formatDate(frontmatter.published) }} 发布</span>
-        </div>
+      <div class="meta-item" v-if="frontmatter.published">
+        <span class="meta-value">{{ formatDate(frontmatter.published) }} 发布</span>
       </div>
-      
+    </div>
+    
       <div class="meta-right" v-if="frontmatter.tags && frontmatter.tags.length > 0">
-        <div class="tags-container">
-          <span 
-            v-for="tag in frontmatter.tags" 
-            :key="tag" 
-            class="tag"
-          >
-            {{ tag }}
-          </span>
+      <div class="tags-container">
+        <span 
+          v-for="tag in frontmatter.tags" 
+          :key="tag" 
+          class="tag"
+        >
+          {{ tag }}
+        </span>
         </div>
       </div>
     </div>

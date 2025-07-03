@@ -79,13 +79,13 @@ function scanFilesInDirectory(targetDir: string): Map<string, FileInfo[]> {
     // 检查目录是否存在
     try {
       const files = readdirSync(fullPath)
-      
-      for (const file of files) {
+
+  for (const file of files) {
         const filePath = join(fullPath, file)
         const relativePath = baseDir ? `${baseDir}/${dir}/${file}` : `${dir}/${file}`
-        const stat = statSync(filePath)
-        
-        if (stat.isDirectory()) {
+    const stat = statSync(filePath)
+
+    if (stat.isDirectory()) {
           // 跳过系统目录
           if (['.vitepress', 'node_modules'].includes(file)) continue
           const newBaseDir = baseDir ? `${baseDir}/${dir}` : dir
@@ -108,8 +108,8 @@ function scanFilesInDirectory(targetDir: string): Map<string, FileInfo[]> {
               subject = pathParts[pathParts.length - 2] // 使用父目录名
             } else {
               subject = '其他'
-            }
-          }
+      }
+    }
           
           // 过滤掉顶级目录分组，但保留具体的分类
           if (['Note', 'Record'].includes(subject)) {
@@ -141,7 +141,7 @@ function scanFilesInDirectory(targetDir: string): Map<string, FileInfo[]> {
   } catch (error) {
     console.warn(`Target directory ${targetDir} not found:`, error)
   }
-  
+
   return subjectMap
 }
 
@@ -191,6 +191,19 @@ function generateSidebarForDirectory(targetDir: string): DefaultTheme.SidebarIte
       text: subject,
       items: sidebarItems,
       collapsed: false
+        })
+      }
+  
+  // 如果没有找到任何文件，添加一个占位项
+  if (sidebarStructure.length === 0) {
+    sidebarStructure.push({
+      text: '目录',
+      items: [
+        {
+          text: '暂无内容',
+          link: `/${targetDir}/`
+        }
+      ]
     })
   }
   
@@ -199,7 +212,7 @@ function generateSidebarForDirectory(targetDir: string): DefaultTheme.SidebarIte
 
 export const sidebar = (): DefaultTheme.Sidebar => {
   const result: DefaultTheme.Sidebar = {}
-  
+
   // 为Note目录生成专门的侧边栏
   const noteSidebar = generateSidebarForDirectory('Note')
   const notePaths = ['/Note/', '/Note/linear-algebra/', '/Note/information-theory/', '/Note/computer-internet/', '/Note/formal-languages-and-automata-theory/']
@@ -213,6 +226,6 @@ export const sidebar = (): DefaultTheme.Sidebar => {
   recordPaths.forEach(path => {
     result[path] = recordSidebar
   })
-  
+
   return result
 }
