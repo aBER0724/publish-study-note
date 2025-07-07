@@ -62,3 +62,7 @@ tags:
     :::
 
 5. 递归树
+
+    从一个调用产生了个调用分支。比如, $f(n) = f(n-1) + f(n-2)$.
+
+    ![斐波那契数列的递归树](https://www.hello-algo.com/chapter_computational_complexity/iteration_and_recursion.assets/recursion_tree.png)
