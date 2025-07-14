@@ -76,7 +76,7 @@ export default defineConfig({
     ],
 
     outline: {
-      level: [2, 3],
+      level: [3, 4],
       label: '本页大纲'
     },
 
