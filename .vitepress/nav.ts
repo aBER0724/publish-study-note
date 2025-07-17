@@ -172,13 +172,27 @@ function generateSidebarForDirectory(targetDir: string): DefaultTheme.SidebarIte
   for (const [subject, files] of subjectMap) {
     if (files.length === 0) continue
     
-    // 按发布日期排序, 最新的在前
+    // 按文件名中的编号排序 (0x0 -> 0x1 -> 0x2)
     files.sort((a, b) => {
-      if (a.published && b.published) {
-        return b.published.getTime() - a.published.getTime()
+      // 提取文件名中的编号 (例如: 0x0, 0x1, 0x2)
+      const extractNumber = (title: string): number => {
+        const match = title.match(/0x(\w+)/i)
+        if (match) {
+          // 支持十六进制编号转换为十进制
+          return parseInt(match[1], 16)
+        }
+        return 999 // 没有编号的文件排在最后
       }
-      if (a.published) return -1
-      if (b.published) return 1
+      
+      const numA = extractNumber(a.title)
+      const numB = extractNumber(b.title)
+      
+      // 先按编号排序
+      if (numA !== numB) {
+        return numA - numB
+      }
+      
+      // 编号相同时按标题字典序排序
       return a.title.localeCompare(b.title, 'zh-CN', { numeric: true })
     })
     
