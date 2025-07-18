@@ -8,6 +8,7 @@ pnpm-debug.log*
 # VitePress build outputs
 .vitepress/cache/
 .vitepress/dist/
+public/heatmap.json
 
 # Environment variables
 .env
