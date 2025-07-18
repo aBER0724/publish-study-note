@@ -1,21 +1,23 @@
 <template>
-    <div class="cal-heatmap-container">
-        <div class="cal-heatmap-header">
-            <span class="cal-heatmap-header-title">Update Heatmap</span>
-            <div class="cal-heatmap-header-direct">
-                <div class="heatmap-button-group">
-                    <button class="heatmap-btn" @click="(e) => { e.preventDefault(); cal.previous(); }">← Prev</button>
-                    <button class="heatmap-btn" @click="(e) => { e.preventDefault(); cal.next(); }">Next →</button>
+    <ClientOnly>
+        <div class="cal-heatmap-container">
+            <div class="cal-heatmap-header">
+                <span class="cal-heatmap-header-title">Update Heatmap</span>
+                <div class="cal-heatmap-header-direct">
+                    <div class="heatmap-button-group">
+                        <button class="heatmap-btn" @click="(e) => { e.preventDefault(); cal.previous(); }">← Prev</button>
+                        <button class="heatmap-btn" @click="(e) => { e.preventDefault(); cal.next(); }">Next →</button>
+                    </div>
+                </div>
+                <div class="cal-heatmap-legend-container">
+                    <span class="cal-heatmap-legend-text">Less</span>
+                    <div id="cal-heatmap-legend"></div>
+                    <span class="cal-heatmap-legend-text">More</span>
                 </div>
             </div>
-            <div class="cal-heatmap-legend-container">
-                <span class="cal-heatmap-legend-text">Less</span>
-                <div id="cal-heatmap-legend"></div>
-                <span class="cal-heatmap-legend-text">More</span>
-            </div>
+            <div id="cal-heatmap"></div>
         </div>
-        <div id="cal-heatmap"></div>
-    </div>
+    </ClientOnly>
 </template>
 
 <script setup lang="ts">
