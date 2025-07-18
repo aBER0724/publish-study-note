@@ -1,67 +1,54 @@
-import { execSync } from 'child_process';
 import fs from 'fs';
+import glob from 'fast-glob';
+import matter from 'gray-matter';
 import dayjs from 'dayjs';
 
-// 设置日期范围
-const sinceDate = "2024-04-17T00:00:00Z"; 
-const untilDate = dayjs().add(1, 'day').format('YYYY-MM-DDT23:59:59Z');
+async function generateHeatmapData() {
+    console.log('Starting heatmap data generation by reading file metadata...');
 
-// 使用git log命令获取指定日期范围内的提交信息，包含文件名
-const gitLogCmd = `git log --since="${sinceDate}" --until="${untilDate}" --name-only --pretty=format:"%cd" --date=format:"%Y-%m-%dT%H:%M:%SZ"`;
-console.log("Executing git log command:", gitLogCmd);
-const output = execSync(gitLogCmd, { encoding: 'utf-8' });
-console.log("--- Git Log Output ---");
-console.log(output);
-console.log("--- End Git Log Output ---");
+    // Find all markdown files in the 'Note' directory
+    const files = await glob('Note/**/*.md');
+    console.log(`Found ${files.length} markdown files:`, files);
 
-// 上一个日期变量，用来判断是否是新的提交记录开始
-let lastDate = null;
-const lines = output.split('\n');
-const results = [];
+    const dateCounts = {};
 
-lines.forEach(line => {
-    // 如果是日期行，保存该日期
-    if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/.test(line.trim())) {
-        lastDate = line.trim();
-    } else if (/^Note\/.+\.md$/.test(line.trim()) && lastDate) {
-        results.push({ date: lastDate, file: line.trim() });
-    }
-});
+    for (const file of files) {
+        try {
+            console.log(`--- Processing file: ${file} ---`);
+            const fileContent = fs.readFileSync(file, 'utf-8');
+            const { data: frontmatter } = matter(fileContent);
 
-console.log("--- Parsed Results (before filtering) ---");
-console.log(JSON.stringify(results, null, 2));
-console.log("--- End Parsed Results ---");
-
-// 过滤一下同一天内的重复文件
-function filterData(data) {
-    // 将数据按日期分组
-    const groupedData = data.reduce((acc, obj) => {
-        const date = obj.date.split('T')[0];
-        acc[date] = acc[date] || [];
-        acc[date].push(obj.file);
-        return acc;
-    }, {});
-
-    // 去除每个日期组内的重复文件
-    for (const date in groupedData) {
-        groupedData[date] = [...new Set(groupedData[date])];
+            // Check for 'published' in frontmatter
+            if (frontmatter.published) {
+                const date = dayjs(frontmatter.published).format('YYYY-MM-DD');
+                console.log(`Found published date: ${frontmatter.published}, formatted to: ${date}`);
+                dateCounts[date] = (dateCounts[date] || 0) + 1;
+            } else {
+                console.log('No "published" date found in frontmatter.');
+            }
+        } catch (error) {
+            console.error(`Error processing file ${file}:`, error);
+        }
     }
 
-    // 重新构建结果数组
-    const filteredData = [];
-    for (const date in groupedData) {
-        filteredData.push({ date: `${date}`, file: groupedData[date].length });
-    }
+    console.log('--- Aggregated date counts ---');
+    console.log(JSON.stringify(dateCounts, null, 2));
+    console.log('--- End Aggregated date counts ---');
 
-    return filteredData;
+    // Convert the aggregated data to the format required by CalHeatmap
+    const heatmapData = Object.entries(dateCounts).map(([date, count]) => ({
+        date: date,
+        file: count
+    }));
+
+    console.log('Final heatmap data:', JSON.stringify(heatmapData, null, 2));
+
+    // Write the data to heatmap.json
+    fs.writeFileSync('heatmap.json', JSON.stringify(heatmapData));
+    console.log('heatmap.json has been written successfully.');
 }
 
-const filteredData = filterData(results);
-
-console.log("--- Final Filtered Data ---");
-console.log(JSON.stringify(filteredData, null, 2));
-console.log("--- End Final Filtered Data ---");
-
-// fs.writeFileSync('heatmap.json', JSON.stringify(results, null, 2))
-fs.writeFileSync('heatmap.json', JSON.stringify(filteredData))
-console.log("heatmap.json has been written successfully.");
+generateHeatmapData().catch(error => {
+    console.error('Failed to generate heatmap data:', error);
+    process.exit(1);
+});
