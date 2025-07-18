@@ -32,12 +32,12 @@ async function generateHeatmapData() {
     }));
 
     // Ensure the public directory exists
-    const publicDir = path.resolve(process.cwd(), 'docs', 'public');
+    const publicDir = path.resolve(process.cwd(), 'public');
     if (!fs.existsSync(publicDir)) {
         fs.mkdirSync(publicDir, { recursive: true });
     }
 
-    // Write the data to docs/public/heatmap.json
+    // Write the data to public/heatmap.json
     const outputPath = path.join(publicDir, 'heatmap.json');
     fs.writeFileSync(outputPath, JSON.stringify(heatmapData));
     console.log(`heatmap.json has been written successfully to ${outputPath}`);

@@ -38,10 +38,11 @@ export default defineConfig({
   markdown: {
     config: (md) => {
       md.use(mathjax3);
-      md.use(MermaidMarkdown); 
+      md.use(MermaidMarkdown);
     },
   },
   vite: {
+    publicDir: 'public',
     plugins: [MermaidPlugin()],
     optimizeDeps: {
       include: ['mermaid'],

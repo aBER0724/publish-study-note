@@ -83,7 +83,7 @@ function paint(cal: CalHeatmap, theme: 'light' | 'dark') {
         {
             theme: theme,
             data: {
-                source: '/heatmap.json',
+                source: '../../../heatmap.json',
                 type: 'json',
                 x: 'date',
                 y: (datum) => +datum['file'],
