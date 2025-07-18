@@ -4,6 +4,7 @@ import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 import './style.css'
 import MetaInfo from './components/MetaInfo.vue'
+import Heatmap from './components/Heatmap.vue'
 import { inject } from '@vercel/analytics'
 import '@fancyapps/ui/dist/fancybox/fancybox.css';
 import { onMounted, watch, nextTick } from 'vue';
@@ -32,18 +33,7 @@ export default {
         });
         
         // 为所有主内容区域的图片启用 Fancybox
-        Fancybox.bind('.main img', {
-          Toolbar: {
-            display: {
-              left: ['infobar'],
-              middle: [],
-              right: ['slideshow', 'fullscreen', 'thumbs', 'close']
-            }
-          },
-          Images: {
-            zoom: true
-          }
-        });
+        Fancybox.bind('.main img');
       } catch (error) {
         console.error('Failed to load Fancybox:', error);
       }
@@ -65,6 +55,7 @@ export default {
   },
   enhanceApp({ app, router, siteData }) {
     app.component('MetaInfo', MetaInfo)
+    app.component('Heatmap', Heatmap)
     
     // 初始化 Vercel Analytics
     if (typeof window !== 'undefined') {

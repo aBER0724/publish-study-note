@@ -2,13 +2,15 @@
   "name": "publish-study-note",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "build": "vitepress build",
     "docs:dev": "vitepress dev",
     "docs:build": "vitepress build",
     "docs:preview": "vitepress preview",
-    "update-frontmatter": "node scripts/update-frontmatter.js"
+    "update-frontmatter": "node scripts/update-frontmatter.js",
+    "heatmap": "node scripts/heatmap.js"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +18,8 @@
   "dependencies": {
     "@fancyapps/ui": "^6.0.5",
     "@vercel/analytics": "^1.5.0",
+    "cal-heatmap": "^4.2.4",
+    "dayjs": "^1.11.13",
     "fast-glob": "^3.3.2",
     "feed": "^4.2.2",
     "gray-matter": "^4.0.3",
@@ -28,6 +32,7 @@
     "markdown-it": "^14.1.0",
     "markdown-it-mathjax3": "^4.3.2",
     "mermaid": "^11.7.0",
+    "sass-embedded": "^1.89.2",
     "vitepress-plugin-mermaid": "^2.0.17"
   }
 }

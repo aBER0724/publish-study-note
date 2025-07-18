@@ -68,6 +68,14 @@
   --vp-c-danger-2: var(--vp-c-red-2);
   --vp-c-danger-3: var(--vp-c-red-3);
   --vp-c-danger-soft: var(--vp-c-red-soft);
+
+  /* 热力图相关变量 */
+  --vp-home-heatmap-legend-text: var(--vp-c-text-2);
+}
+
+/* 暗色主题下的热力图变量 */
+.dark {
+  --vp-home-heatmap-legend-text: var(--vp-c-text-2);
 }
 
 /**
