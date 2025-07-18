@@ -5,9 +5,9 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "build": "npm run heatmap && vitepress build",
+    "build": "git fetch --unshallow && npm run heatmap && vitepress build",
     "docs:dev": "vitepress dev",
-    "docs:build": "npm run heatmap && vitepress build",
+    "docs:build": "git fetch --unshallow && npm run heatmap && vitepress build",
     "docs:preview": "vitepress preview",
     "update-frontmatter": "node scripts/update-frontmatter.js",
     "heatmap": "node scripts/heatmap.js"
