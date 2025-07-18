@@ -8,7 +8,11 @@ const untilDate = dayjs().add(1, 'day').format('YYYY-MM-DDT23:59:59Z');
 
 // 使用git log命令获取指定日期范围内的提交信息，包含文件名
 const gitLogCmd = `git log --since="${sinceDate}" --until="${untilDate}" --name-only --pretty=format:"%cd" --date=format:"%Y-%m-%dT%H:%M:%SZ"`;
+console.log("Executing git log command:", gitLogCmd);
 const output = execSync(gitLogCmd, { encoding: 'utf-8' });
+console.log("--- Git Log Output ---");
+console.log(output);
+console.log("--- End Git Log Output ---");
 
 // 上一个日期变量，用来判断是否是新的提交记录开始
 let lastDate = null;
@@ -23,6 +27,10 @@ lines.forEach(line => {
         results.push({ date: lastDate, file: line.trim() });
     }
 });
+
+console.log("--- Parsed Results (before filtering) ---");
+console.log(JSON.stringify(results, null, 2));
+console.log("--- End Parsed Results ---");
 
 // 过滤一下同一天内的重复文件
 function filterData(data) {
@@ -50,5 +58,10 @@ function filterData(data) {
 
 const filteredData = filterData(results);
 
+console.log("--- Final Filtered Data ---");
+console.log(JSON.stringify(filteredData, null, 2));
+console.log("--- End Final Filtered Data ---");
+
 // fs.writeFileSync('heatmap.json', JSON.stringify(results, null, 2))
 fs.writeFileSync('heatmap.json', JSON.stringify(filteredData))
+console.log("heatmap.json has been written successfully.");
