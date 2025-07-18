@@ -29,7 +29,7 @@ import 'cal-heatmap/cal-heatmap.css'
 import dayjs from 'dayjs'
 
 import { useData } from "vitepress"
-import { watch } from "vue"
+import { watch, onMounted } from "vue"
 const { isDark } = useData();
 
 const yyDaysTemplate: CalHeatmap.Template = DateHelper => {
@@ -158,23 +158,25 @@ function destory(cal: CalHeatmap) {
 }
 
 let cal: CalHeatmap;
-watch(
-    isDark,
-    () => {
-        if (isDark.value) {
-            if (cal !== undefined) destory(cal);
-            cal = new CalHeatmap();
-            paint(cal, 'dark');
-        } else {
-            if (cal !== undefined) destory(cal);
-            cal = new CalHeatmap();
-            paint(cal, 'light');
+onMounted(() => {
+    watch(
+        isDark,
+        () => {
+            if (isDark.value) {
+                if (cal !== undefined) destory(cal);
+                cal = new CalHeatmap();
+                paint(cal, 'dark');
+            } else {
+                if (cal !== undefined) destory(cal);
+                cal = new CalHeatmap();
+                paint(cal, 'light');
+            }
+        },
+        {
+            immediate: true,
         }
-    },
-    {
-        immediate: true,
-    }
-);
+    );
+})
 </script>
 
 <style scoped lang="scss">
