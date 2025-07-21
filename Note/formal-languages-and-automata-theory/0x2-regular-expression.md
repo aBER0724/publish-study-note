@@ -13,18 +13,20 @@ description: 正则表达式
 
 - 有穷自动机: 通过抽象机器装置扫描和接受字符串识别 (表示)正则语言.
 - 正则表达式: 通过代数式表示或产生正则语言.
-	> 正则表达式所表示的语言与正则语言等价.
+ > 正则表达式所表示的语言与正则语言等价.
 
 ### 基础
-1. $\emptyset$ 是一个正则表达式, 表示空语言 $\emptyset$. 
-2. $\epsilon$ 是一个正则表达式, 表示语言 $\{\epsilon\}$. 
-3. 对于任意一个符号 $a$, $a$ 是一个正则表达式,表示语言 $\{a\}$, 具有一个长度为 1 的字符串. 
+
+1. $\emptyset$ 是一个正则表达式, 表示空语言 $\emptyset$.
+2. $\epsilon$ 是一个正则表达式, 表示语言 $\{\epsilon\}$.
+3. 对于任意一个符号 $a$, $a$ 是一个正则表达式,表示语言 $\{a\}$, 具有一个长度为 1 的字符串.
 
 ### 归纳
-1. 如果 $E_1$ 和 $E_2$ 是正则表达式, 那么 $E_1 + E_2$ 也是正则表达式, 且 $L(E_1 + E_2) = L(E_1) \cup L(E_2)$. 
-2. 如果 $E_1$ 和 $E_2$ 是正则表达式, 那么 $E_1 E_2$ 也是正则表达式, 且 $L(E_1 E_2) = L(E_1)L(E_2)$. 
+
+1. 如果 $E_1$ 和 $E_2$ 是正则表达式, 那么 $E_1 + E_2$ 也是正则表达式, 且 $L(E_1 + E_2) = L(E_1) \cup L(E_2)$.
+2. 如果 $E_1$ 和 $E_2$ 是正则表达式, 那么 $E_1 E_2$ 也是正则表达式, 且 $L(E_1 E_2) = L(E_1)L(E_2)$.
 3. 如果 $E$ 是正则表达式, 则 $E^*$ 也是正则表达式.
-4. 如果 $E$ 是正则表达式, 则 $(E)$ 也是正则表达式, 表示语言 $L(E)$. 
+4. 如果 $E$ 是正则表达式, 则 $(E)$ 也是正则表达式, 表示语言 $L(E)$.
 
 ### 计算优先级
 
@@ -38,7 +40,7 @@ description: 正则表达式
 ## 有穷自动机和正则表达式
 
 对于一个 DFA 所能识别的语言, 都**存在**一个正则表达式表示它.  
-任何一个正则表达式表示的语言, 都可以由一个 $\epsilon$-NFA 识别. 
+任何一个正则表达式表示的语言, 都可以由一个 $\epsilon$-NFA 识别.
 
 ```mermaid
 graph LR 
@@ -87,10 +89,10 @@ $$R_{i,j}^{(k)} = \{x \mid \hat{\delta}(i, x) = j, \text{x经过的状态除两�
     - $R_{k,j}^{(k-1)}$: 最后从 $k$ 到 $j$.
 
 如果 1 是开始结点，则和 DFA 等价的正则表达式就是
-$$\cup_{j \in F} R_{1,j}^{(n)}$$ 
+$$\cup_{j \in F} R_{1,j}^{(n)}$$
 即，从状态1到终结状态的所有路径的集合。
 
-**Example**: 
+**Example**:
 
 ![](https://quickchart.io/graphviz?graph=digraph{rankdir=LR;node[shape=circle];start[shape=point,label="start"];q1[label="q1"];q2[label="q2",peripheries=2];start->q1[label="start"];q1->q2[label="0"];q1->q1[label="1"];q2->q2[label="1,0"];})
 
@@ -137,4 +139,3 @@ $$\cup_{j \in F} R_{1,j}^{(n)}$$
     ![](https://quickchart.io/graphviz?graph=digraph{rankdir=LR;start[shape=point];s[shape=circle,label="s"];f[shape=doublecircle,label="f"];start->s[label="start"];s->f[label="1*00*1%2800*1%2B11*00*1%29*"];})
 
 该自动机的正则表达式为: $1^*00^*1(00^*1+11^*00^*1)^*$.
-
