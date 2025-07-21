@@ -5,13 +5,9 @@ lang: zh
 subject: 形式语言与自动机
 tags:
   - 形式语言与自动机
+  - DFA
+  - NFA
 description: 形式语言理论与自动机原理
-keywords:
-  - 形式语言与自动机
-  - 形式语言
-  - 自动机
-  - 编译原理
-  - 有穷状态自动机
 ---
 
 ## 有穷自动机 FA
