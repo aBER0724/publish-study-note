@@ -71,7 +71,7 @@ $$R_{i,j}^{(k)} = \{x \mid \hat{\delta}(i, x) = j, \text{x经过的状态除两�
 
       |$R_{i,j}^{(0)} = \epsilon$ |$R_{i,j}^{(0)} = a$|$R_{i,j}^{(0)} = a_1 + a_2 + \cdots + a_t$|
       |:----:|:----:|:----:|
-      |![](https://quickchart.io/graphviz?graph=digraph{rankdir=TD;i[shape=circle,label="i"];j[shape=circle,label="j"];})|![](https://quickchart.io/graphviz?graph=digraph{rankdir=LR;i[shape=circle,label="i"];j[shape=circle,label="j"];i->j[label="a"];})|![](https://quickchart.io/graphviz?graph=digraph{rankdir=LR;i[shape=circle,label="i"];j[sh ape=circle,label="j"];i->j[label="a_1"];i->j[label="..."];i->j[label="a_t"];})|
+      |![](https://quickchart.io/graphviz?graph=digraph{rankdir=TD;i[shape=circle,label="i"];j[shape=circle,label="j"];})|![](https://quickchart.io/graphviz?graph=digraph{rankdir=LR;i[shape=circle,label="i"];j[shape=circle,label="j"];i->j[label="a"];})|![](https://quickchart.io/graphviz?graph=digraph{rankdir=LR;i[shape=circle,label="i"];j[shape=circle,label="j"];i->j[label="a_1"];i->j[label="..."];i->j[label="a_t"];})|
 
       2. 情况 1: $i = j$
 
