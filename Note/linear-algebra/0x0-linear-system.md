@@ -416,7 +416,7 @@ $c_1, c_2, \cdots, c_k$ 是 coefficients.
 如果两个向量非平行, 可以组合成任意的向量.  
 所以当 $A$ 的列不平行时, 是有解的. 但 $A$ 的列平行时, 不一定无解.
 
-#### Example 1
+::: details Example 1
 
 $$
 3x_1 + 6x_2 = 3 \\
@@ -448,7 +448,9 @@ $$
 
 $\begin{bmatrix} 3 \\ 4 \end{bmatrix}$ 无法通过 $c_1 \begin{bmatrix} 3 \\ 2 \end{bmatrix} + c_2 \begin{bmatrix} 6 \\ 4 \end{bmatrix}$ 得到, 所以这个方程组无解.
 
-#### Example 2  
+:::
+
+::: details Example 2  
 
 $$
 2x_1 + 3x_2 = 4 \\
@@ -495,6 +497,8 @@ $$
 $$
 
 $b$ 可以通过线性组合得到, 所以方程组有解.
+
+:::
 
 ## 张成空间 Span  
 

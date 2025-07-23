@@ -126,7 +126,7 @@ $$A = (Q, \Sigma, \delta, q_0, F)$$
 4. $q_0 \in Q$: **初始状态**
 5. $F \subseteq Q$: 终结状态集或**接受状态**集
 
-**Example**: 接受全部以 `01` 结尾的串.  
+::: details Example: 接受全部以 `01` 结尾的串
 
 1. **DFA**  
 
@@ -143,6 +143,8 @@ $$A = (Q, \Sigma, \delta, q_0, F)$$
    | $\rightarrow q_0$ | $\{ q_0,q_1 \}$ | $\{ q_0 \}$ |  
    | $q_1$ | $\emptyset$ | $\{ q_2 \}$ |  
    | $*q_2$ | \emptyset$ | $\emptyset$ |  
+
+:::
 
 **定理**: 如果语言 $L$ 被 NFA 接受, 当且仅当 $L$ 被 DFA 接受.
 
@@ -170,7 +172,7 @@ $$A = (Q, \Sigma, \delta, q_0, F)$$
    > $q_3 \rightarrow \{q_3,q_4\}$  
    > $\delta_D(S,a) = \{q_3,q_4,q_5\}$  
 
-**Example**:  
+::: details Example
 
 NFA:  
 
@@ -203,6 +205,8 @@ NFA:
 
 > $\{q_0\} \rightarrow \{q_0,q_1\} \rightarrow \{q_0,q_1\} \rightarrow \{q_0,q_2\}$.  
 > 所以能只有这几个是能从初始状态到达的状态.  
+
+:::
 
 ### 带空转移的 NFA ($\epsilon$-NFA)  
 

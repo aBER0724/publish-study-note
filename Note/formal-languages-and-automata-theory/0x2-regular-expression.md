@@ -92,7 +92,7 @@ $$R_{i,j}^{(k)} = \{x \mid \hat{\delta}(i, x) = j, \text{x经过的状态除两�
 $$\cup_{j \in F} R_{1,j}^{(n)}$$
 即，从状态1到终结状态的所有路径的集合.
 
-**Example**:
+::: details Example
 
 ![](https://quickchart.io/graphviz?graph=digraph{rankdir=LR;node[shape=circle];start[shape=point,label="start"];q1[label="q1"];q2[label="q2",peripheries=2];start->q1[label="start"];q1->q2[label="0"];q1->q1[label="1"];q2->q2[label="1,0"];})
 
@@ -109,6 +109,7 @@ $$\cup_{j \in F} R_{1,j}^{(n)}$$
 |$R_{1,2}^{(2)}$ | $1^*0 + 1^*0(\epsilon + 0 + 1)^* (\epsilon + 0 + 1)$|
 |$R_{2,1}^{(2)}$ | $\emptyset + (\epsilon + 0 + 1)(\epsilon + 0 + 1)^* \emptyset$|
 |$R_{2,2}^{(2)}$ | $\epsilon + 0 + 1 + (\epsilon + 0 + 1)(\epsilon + 0 + 1)^* (\epsilon + 0 + 1)$|
+:::
 
 #### 状态消除法
 
@@ -118,7 +119,7 @@ $$\cup_{j \in F} R_{1,j}^{(n)}$$
 |![](https://quickchart.io/graphviz?graph=digraph{rankdir=LR;s0[label="",shape=circle];s1[label="",shape=circle];s0->s1[label="a"];s0->s1[label="b"];})|![](https://quickchart.io/graphviz?graph=digraph{rankdir=LR;s0[label="",shape=circle];s1[label="",shape=circle];s0->s1[label="a%2Bb"];})|
 |![](https://quickchart.io/graphviz?graph=digraph{rankdir=LR;s0[label="",shape=circle];s1[label="",shape=circle];s2[label="",shape=circle];s0->s1[label="a"];s1->s1[label="c"];s1->s2[label="b"];})|![](https://quickchart.io/graphviz?graph=digraph{rankdir=LR;s0[label="",shape=circle];s1[label="",shape=circle];s0->s1[label="ac%2Ab"];})|
 
-**Example**:
+::: details Example
 
 ![](https://quickchart.io/graphviz?graph=digraph{rankdir=LR;start[shape=point];q0[shape=circle,label="q0"];q1[shape=circle,label="q1"];q2[shape=doublecircle,label="q2"];start->q0[label="start"];q0->q0[label="1"];q0->q1[label="0"];q1->q1[label="0"];q1->q2[label="1"];q2->q1[label="0"];q2->q0[label="1"];})
 
@@ -139,3 +140,5 @@ $$\cup_{j \in F} R_{1,j}^{(n)}$$
     ![](https://quickchart.io/graphviz?graph=digraph{rankdir=LR;start[shape=point];s[shape=circle,label="s"];f[shape=doublecircle,label="f"];start->s[label="start"];s->f[label="1*00*1%2800*1%2B11*00*1%29*"];})
 
 该自动机的正则表达式为: $1^*00^*1(00^*1+11^*00^*1)^*$.
+
+:::

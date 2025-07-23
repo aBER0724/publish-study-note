@@ -151,7 +151,7 @@ $O(1) < O(log_2 n) < O(n) < O(nlog_2 n) < O(n^2) < O(n^3) < 2^n < O(n!) < O(n^n)
 
 算法中**除了输入和程序以为所需额外的存储空间**, 记为: $S(n) = O(g(n))$.
 
-**Example**
+::: details Example
 
 常数空间复杂度(`原地工作`): 算法需要的辅助空间为常量, 即 $O(1)$.
 
@@ -172,3 +172,5 @@ $O(1) < O(log_2 n) < O(n) < O(nlog_2 n) < O(n^2) < O(n^3) < 2^n < O(n!) < O(n^n)
          arr.append(i)
       return arr
    ```
+
+:::
