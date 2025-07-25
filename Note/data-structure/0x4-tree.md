@@ -348,6 +348,8 @@ class ArrayBinaryTree:
 
 ## AVL 树
 
+Adelson-Velsky and Landis Tree
+
 AVL 树既是二叉搜索树，也是平衡二叉树, 即平衡二叉搜索树 (balanced binary search tree).
 
 ```python
