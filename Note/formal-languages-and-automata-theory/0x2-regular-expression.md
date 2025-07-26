@@ -151,119 +151,15 @@ $$\cup_{j \in F} R_{1,j}^{(n)}$$
 
 1. $r+s$ 的 $\epsilon$-NFA
 
-    ```mermaid
-    %%{init: {"theme": "base", "themeVariables": {"edgeLabelBackground": "transparent"}}}%%
-    graph LR
-        direction LR
-
-        %% Define nodes
-        q0(( ))
-        qf((( )))
-
-        %% Define subgraphs with invisible internal links
-        subgraph " "
-            direction LR
-            r_start(( )) --> R_node[R] --> r_end(( ))
-        end
-
-        subgraph " "
-            direction LR
-            s_start(( )) --> S_node[S] --> s_end(( ))
-        end
-        
-        %% Invisible node for the start arrow
-        start_node[ ]
-        style start_node fill:none, stroke:none
-
-        %% Define external connections
-        start_node -- "start" --> q0
-        q0 -- "ε" --> r_start
-        q0 -- "ε" --> s_start
-        r_end -- "ε" --> qf
-        s_end -- "ε" --> qf
-
-        %% Style the label nodes to be invisible
-        style R_node fill:none, stroke:none, font-weight:bold, font-size:16px
-        style S_node fill:none, stroke:none, font-weight:bold, font-size:16px
-
-        %% Make the internal links invisible by targeting their index number (0, 1, 2, 3)
-        linkStyle 0 stroke:transparent
-        linkStyle 1 stroke:transparent
-        linkStyle 2 stroke:transparent
-        linkStyle 3 stroke:transparent
-    ```
+    ![](https://quickchart.io/graphviz?graph=digraph{rankdir=LR;start[shape=point,label=""];split[shape=circle,label=""];end[shape=doublecircle,label=""];start->split[label="start"];split->r_in[label="ε"];split->s_in[label="ε"];r_out->end[label="ε"];s_out->end[label="ε"];subgraph%20clusterR%20{label="R";color=lightgrey;r_in[shape=circle,label=""];r_out[shape=circle,label=""];r_in->r_out[style=invis];};subgraph%20clusterS%20{label="S";color=lightgrey;s_in[shape=circle,label=""];s_out[shape=circle,label=""];s_in->s_out[style=invis];};})
 
 2. $rs$ 的 $\epsilon$-NFA
 
-    ```mermaid
-    %%{init: {"theme": "base", "themeVariables": {"edgeLabelBackground": "transparent"}}}%%graph LR
-    direction LR
-
-    %% Subgraph for R
-    subgraph " "
-        direction LR
-        r_start(( )) --> R_node[R] --> r_end(( ))
-    end
-
-    %% Subgraph for S
-    subgraph " "
-        direction LR
-        s_start(( )) --> S_node[S] --> s_end((( )))
-    end
-
-    %% Invisible node for the start arrow
-    start_node[ ]
-    style start_node fill:none, stroke:none
-
-    %% Define the connections between elements
-    start_node -- "start" --> r_start
-    r_end -- "ε" --> s_start
-
-    %% Style the nodes inside subgraphs to be just labels
-    style R_node fill:none, stroke:none, font-weight:bold, font-size:16px
-    style S_node fill:none, stroke:none, font-weight:bold, font-size:16px
-
-    %% Make the links inside the subgraphs invisible
-    %% linkStyle is applied based on the order of link definition
-    linkStyle 0 stroke:transparent
-    linkStyle 1 stroke:transparent
-    linkStyle 2 stroke:transparent
-    linkStyle 3 stroke:transparent
-    ```
+    ![](https://quickchart.io/graphviz?graph=digraph{rankdir=LR;start[shape=point,label=""];subgraph%20clusterR%20{label="R";color=lightgrey;r_in[shape=circle,label=""];r_out[shape=circle,label=""];r_in->r_out[style=invis];};subgraph%20clusterS%20{label="S";color=lightgrey;s_in[shape=circle,label=""];s_out[shape=doublecircle,label=""];s_in->s_out[style=invis];};start->r_in[label="start"];r_out->s_in[label="ε"];})
 
 3. $r^*$ 的 $\epsilon$-NFA
 
-    ```mermaid
-    %%{init: {"theme": "base", "themeVariables": {"edgeLabelBackground": "transparent"}}}%%
-    graph LR
-        direction LR
-        
-        %% 创建开始节点
-        start[ ] --"start"--> start_state(( ))
-        style start fill:none, stroke:none
-        
-        %% 定义节点
-        r_left(( ))
-        r_right(( ))
-        end_state((( )))
-        
-        %% R子结构
-        subgraph R [" "]
-            direction LR
-            r_left --- |"R"| r_right
-            r_right -- "ε" --> r_left
-        end
-        
-        %% 连接和最终状态
-        start_state -- "ε" --> r_left
-        r_right -- "ε" --> end_state
-        start_state -- "ε" --> end_state
-        
-        %% 隐藏子图中R标签的连线
-        linkStyle 1 stroke-width:0px
-
-    ```
-
+    ![](https://quickchart.io/graphviz?graph=digraph{rankdir=LR;start[shape=point,label=""];i0[shape=circle,label=""];f0[shape=doublecircle,label=""];subgraph%20clusterR%20{label="R";color=lightgrey;r_in[shape=circle,label=""];r_out[shape=circle,label=""];r_in->r_out[style=invis];};start->i0[label="start"];i0->r_in[label="ε"];r_out->f0[label="ε"];i0->f0[label="ε"];r_out->r_in[label="ε"];f0[shape=doublecircle,label=""];})
 
 :::details Example: 正则表达式 $(0+1)^*1(0+1)$ 构造为 $\varepsilon$-NFA.
 
