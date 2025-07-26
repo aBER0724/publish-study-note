@@ -142,3 +142,184 @@ $$\cup_{j \in F} R_{1,j}^{(n)}$$
 该自动机的正则表达式为: $1^*00^*1(00^*1+11^*00^*1)^*$.
 
 :::
+
+### 正则表达式 --> DFA
+
+每个正则表达式定义的语言, 都存在一个与其等价的 $\epsilon$-NFA.
+
+#### 归纳法
+
+1. $r+s$ 的 $\epsilon$-NFA
+
+    ```mermaid
+    %%{init: {"theme": "base", "themeVariables": {"edgeLabelBackground": "transparent"}}}%%
+    graph LR
+        direction LR
+
+        %% Define nodes
+        q0(( ))
+        qf((( )))
+
+        %% Define subgraphs with invisible internal links
+        subgraph " "
+            direction LR
+            r_start(( )) --> R_node[R] --> r_end(( ))
+        end
+
+        subgraph " "
+            direction LR
+            s_start(( )) --> S_node[S] --> s_end(( ))
+        end
+        
+        %% Invisible node for the start arrow
+        start_node[ ]
+        style start_node fill:none, stroke:none
+
+        %% Define external connections
+        start_node -- "start" --> q0
+        q0 -- "ε" --> r_start
+        q0 -- "ε" --> s_start
+        r_end -- "ε" --> qf
+        s_end -- "ε" --> qf
+
+        %% Style the label nodes to be invisible
+        style R_node fill:none, stroke:none, font-weight:bold, font-size:16px
+        style S_node fill:none, stroke:none, font-weight:bold, font-size:16px
+
+        %% Make the internal links invisible by targeting their index number (0, 1, 2, 3)
+        linkStyle 0 stroke:transparent
+        linkStyle 1 stroke:transparent
+        linkStyle 2 stroke:transparent
+        linkStyle 3 stroke:transparent
+    ```
+
+2. $rs$ 的 $\epsilon$-NFA
+
+    ```mermaid
+    %%{init: {"theme": "base", "themeVariables": {"edgeLabelBackground": "transparent"}}}%%graph LR
+    direction LR
+
+    %% Subgraph for R
+    subgraph " "
+        direction LR
+        r_start(( )) --> R_node[R] --> r_end(( ))
+    end
+
+    %% Subgraph for S
+    subgraph " "
+        direction LR
+        s_start(( )) --> S_node[S] --> s_end((( )))
+    end
+
+    %% Invisible node for the start arrow
+    start_node[ ]
+    style start_node fill:none, stroke:none
+
+    %% Define the connections between elements
+    start_node -- "start" --> r_start
+    r_end -- "ε" --> s_start
+
+    %% Style the nodes inside subgraphs to be just labels
+    style R_node fill:none, stroke:none, font-weight:bold, font-size:16px
+    style S_node fill:none, stroke:none, font-weight:bold, font-size:16px
+
+    %% Make the links inside the subgraphs invisible
+    %% linkStyle is applied based on the order of link definition
+    linkStyle 0 stroke:transparent
+    linkStyle 1 stroke:transparent
+    linkStyle 2 stroke:transparent
+    linkStyle 3 stroke:transparent
+    ```
+
+3. $r^*$ 的 $\epsilon$-NFA
+
+    ```mermaid
+    %%{init: {"theme": "base", "themeVariables": {"edgeLabelBackground": "transparent"}}}%%
+    graph LR
+        direction LR
+        
+        %% 创建开始节点
+        start[ ] --"start"--> start_state(( ))
+        style start fill:none, stroke:none
+        
+        %% 定义节点
+        r_left(( ))
+        r_right(( ))
+        end_state((( )))
+        
+        %% R子结构
+        subgraph R [" "]
+            direction LR
+            r_left --- |"R"| r_right
+            r_right -- "ε" --> r_left
+        end
+        
+        %% 连接和最终状态
+        start_state -- "ε" --> r_left
+        r_right -- "ε" --> end_state
+        start_state -- "ε" --> end_state
+        
+        %% 隐藏子图中R标签的连线
+        linkStyle 1 stroke-width:0px
+
+    ```
+
+
+:::details Example: 正则表达式 $(0+1)^*1(0+1)$ 构造为 $\varepsilon$-NFA.
+
+1. 构造 $(0+1)$
+
+    ![](https://quickchart.io/graphviz?graph=digraph{rankdir=LR;q0[shape=circle,label=""];q1[shape=circle,label=""];q2[shape=circle,label=""];q3[shape=circle,label=""];q4[shape=circle,label=""];qf[shape=circle,label=""];q0->q1[label="ε"];q0->q3[label="ε"];q1->q2[label="0"];q2->qf[label="ε"];q3->q4[label="1"];q4->qf[label="ε"];})
+
+2. 构造 $(0+1)^*$
+
+    ![](https://quickchart.io/graphviz?graph=digraph{rankdir=LR;a[shape=circle,label=""];b[shape=circle,label=""];c1[shape=circle,label=""];c2[shape=circle,label=""];d1[shape=circle,label=""];d2[shape=circle,label=""];e[shape=circle,label=""];f[shape=circle,label=""];a->b[label="ε"];b->c1[label="ε"];b->d1[label="ε"];c1->c2[label="0"];c2->e[label="ε"];d1->d2[label="1"];d2->e[label="ε"];e->f[label="ε"];f->a[label="ε"];b->e[label="ε"];})
+
+3. 构造 $(0+1)^*1$
+
+    ![](https://quickchart.io/graphviz?graph=digraph{rankdir=LR;a[shape=circle,label=""];b[shape=circle,label=""];c1[shape=circle,label=""];c2[shape=circle,label=""];d1[shape=circle,label=""];d2[shape=circle,label=""];e[shape=circle,label=""];f[shape=circle,label=""];g[shape=circle,label=""];h[shape=circle,label=""];a->b[label="ε"];b->c1[label="ε"];b->d1[label="ε"];c1->c2[label="0"];c2->e[label="ε"];d1->d2[label="1"];d2->e[label="ε"];e->f[label="ε"];f->a[label="ε"];b->e[label="ε"];f->g[label="ε"];g->h[label="1"];})
+
+4. 构造 $(0+1)^*1(0+1)$
+
+    ![](https://quickchart.io/graphviz?graph=digraph{rankdir=LR;a[shape=circle,label=""];b[shape=circle,label=""];c1[shape=circle,label=""];c2[shape=circle,label=""];d1[shape=circle,label=""];d2[shape=circle,label=""];e[shape=circle,label=""];f[shape=circle,label=""];g[shape=circle,label=""];h[shape=circle,label=""];rb[shape=circle,label=""];rc1[shape=circle,label=""];rc2[shape=circle,label=""];rd1[shape=circle,label=""];rd2[shape=circle,label=""];re[shape=circle,label=""];rg[shape=circle,label=""];rh[shape=circle,label=""];a->b[label="ε"];b->c1[label="ε"];b->d1[label="ε"];c1->c2[label="0"];c2->e[label="ε"];d1->d2[label="1"];d2->e[label="ε"];e->f[label="ε"];f->a[label="ε"];b->e[label="ε"];f->g[label="ε"];g->h[label="1"];h->rb[label="ε"];rb->rc1[label="ε"];rb->rd1[label="ε"];rc1->rc2[label="0"];rc2->re[label="ε"];rd1->rd2[label="1"];rd2->re[label="ε"];re->rg[label="ε"];rg->rh[label="1"];})
+:::
+
+## 正则表达式的代数定律
+
+1. 结合律和交换律
+
+    - $L + M = M + L$ 并的交换律 
+    - $(L + M) + N = L + (M + N)$ 并的结合律
+    - $(LM)N = L(MN)$ 连接的结合律 
+    - 连接不满足交换律 $LM \neq ML$
+
+2. 单位元 
+
+    - $\emptyset + L = L + \emptyset = L$ 并运算的单位元 $\emptyset$
+    - $\epsilon L = L\epsilon = L$ 连接运算的单位元 $\epsilon$
+
+3. 零元
+
+    - $\emptyset L = L\emptyset = \emptyset$ 连接运算的零元
+
+4. 分配律
+
+    - $L(M+N) = LM + LN$ 连接对并满足左分配律
+    - $(M+N)L = ML + NL$ 连接对并满足右分配律 
+
+    > $0+01^*=0\epsilon+01^*=0(\epsilon+1^*)=01^*$ 
+
+5. 幂等律
+
+    - $L+L=L$ 并的幂等律
+
+6. 有关闭包的定律 
+
+    - $(L^*)^* = L^*$, 对某语言的闭包再取闭包 
+    - $\emptyset^* = \epsilon$ 
+    - $\epsilon^* = \epsilon$ 空串的闭包仍然是空串 
+
+7. 发现正则表达式的定律 
+
+    - $L^*L^* = L^*$
+    - $(L+M)^* = (L^*M^*)^*$
