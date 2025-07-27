@@ -25,7 +25,7 @@ $$c_{ij} = a_{i1}b_{1j} + a_{i2}b_{2j} + \cdots + a_{in}b_{nj}$$
 
 $$
 A = \begin{bmatrix}
-   1 & 2 \\****
+   1 & 2 \\
    3 & 4 \\
    5 & 6
 \end{bmatrix} \quad
