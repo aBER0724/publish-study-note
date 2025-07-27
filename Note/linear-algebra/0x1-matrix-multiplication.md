@@ -5,13 +5,11 @@ lang: zh
 subject: 线性代数
 tags:
   - 线性代数
-description: 线性代数基础理论与应用
-keywords:
-  - 线性代数
   - 向量
   - 矩阵
   - 线性变换
   - 矩阵乘法
+description: 线性代数基础理论与应用
 ---
 
 ## 矩阵乘法 Matrix Multiplication

@@ -6,11 +6,6 @@ subject: 信息论
 tags:
   - 信息论
 description: 信息论基础概念与应用
-keywords:
-  - 信息论
-  - 信息熵
-  - 编码理论
-  - 信源与信息熵
 draft: true
 ---
 
