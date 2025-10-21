@@ -30,7 +30,7 @@ const subjectMapping = {
 function extractSubject(tags) {
   if (!Array.isArray(tags)) return null;
   
-  const genericTags = ['笔记', '记录'];
+  const genericTags = ['笔记', '记录', '随笔'];
   return tags.find(tag => !genericTags.includes(tag)) || null;
 }
 
@@ -38,6 +38,7 @@ function extractSubject(tags) {
 function determineCategory(filePath) {
   if (filePath.includes('/Note/')) return 'note';
   if (filePath.includes('/Record/')) return 'record';
+  if (filePath.includes('/Essay/')) return 'essay';
   return 'note'; // 默认为笔记
 }
 
@@ -162,6 +163,7 @@ function main() {
   
   const noteDir = path.join(__dirname, '../Note');
   const recordDir = path.join(__dirname, '../Record');
+  const essayDir = path.join(__dirname, '../Essay');
   
   // 更新Note目录
   if (fs.existsSync(noteDir)) {
@@ -173,6 +175,12 @@ function main() {
   if (fs.existsSync(recordDir)) {
     console.log('\n📝 Updating Record directory...');
     walkDirectory(recordDir, updateFile);
+  }
+
+  // 更新Essay目录
+  if (fs.existsSync(essayDir)) {
+    console.log('\n📜 Updating Essay directory...');
+    walkDirectory(essayDir, updateFile);
   }
   
   console.log('\n🎉 Frontmatter update completed!');

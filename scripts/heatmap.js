@@ -7,7 +7,7 @@ import dayjs from 'dayjs';
 async function generateHeatmapData() {
     console.log('Starting heatmap data generation...');
 
-    const files = await glob('Note/**/*.md');
+    const files = await glob(['Note/**/*.md', 'Record/**/*.md', 'Essay/**/*.md']);
     console.log(`Found ${files.length} markdown files.`);
 
     const dateCounts = {};

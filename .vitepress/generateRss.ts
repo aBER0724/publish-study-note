@@ -122,7 +122,7 @@ export async function generateRSSFeed(config: any) {
   })
 
   // 查找所有markdown文件
-  const files = await fg(['Note/**/*.md', 'Record/**/*.md'], {
+  const files = await fg(['Note/**/*.md', 'Record/**/*.md', 'Essay/**/*.md'], {
     cwd: resolve(__dirname, '../'),
     absolute: true,
     ignore: ['README.md', 'index.md']

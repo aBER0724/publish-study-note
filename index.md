@@ -20,6 +20,10 @@ features:
     title: Record
     details: Records of processes and thoughts.
     link: /Record
+  - icon: 📜
+    title: Essay
+    details: Daily emotional thinking.
+    link: /Essay
 ---
 
 <Heatmap />

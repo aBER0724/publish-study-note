@@ -54,3 +54,6 @@ temp/
 
 # Optional eslint cache
 .eslintcache 
+
+# Obsidian Config
+.obsidian/

@@ -23,7 +23,7 @@ interface FileInfo {
 }
 
 // 通用标签, 不作为科目分类
-const GENERIC_TAGS = ['笔记', '记录', 'note', 'record', 'example', '示例']
+const GENERIC_TAGS = ['笔记', '记录', '随笔', 'note', 'record', 'essay', 'Essay', 'example', '示例']
 
 // 从 markdown 文件中提取完整信息
 function getFileInfo(filePath: string, relativePath: string): FileInfo | null {
@@ -112,7 +112,7 @@ function scanFilesInDirectory(targetDir: string): Map<string, FileInfo[]> {
     }
           
           // 过滤掉顶级目录分组，但保留具体的分类
-          if (['Note', 'Record'].includes(subject)) {
+          if (['Note', 'Record', 'Essay'].includes(subject)) {
             continue
           }
           
@@ -159,7 +159,8 @@ export const nav = (): DefaultTheme.NavItem[] => {
   return [
     { text: 'Home', link: '/' },
     { text: '学习笔记', link: '/Note/' },
-    { text: '记录文档', link: '/Record/' }
+    { text: '记录文档', link: '/Record/' },
+    { text: '随笔', link: '/Essay/' }
   ]
 }
 
@@ -239,6 +240,13 @@ export const sidebar = (): DefaultTheme.Sidebar => {
   const recordPaths = ['/Record/', '/Record/example/']
   recordPaths.forEach(path => {
     result[path] = recordSidebar
+  })
+
+  // 为Essay目录生成专门的侧边栏
+  const essaySidebar = generateSidebarForDirectory('Essay')
+  const essayPaths = ['/Essay/']
+  essayPaths.forEach(path => {
+    result[path] = essaySidebar
   })
 
   return result
